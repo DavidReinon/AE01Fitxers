@@ -144,7 +144,8 @@ public class GestioFitxers {
 	 * @return
 	 */
 	private Comparator<FileInformation> getComparador(String ordenacio, boolean ascendente) {
-		Comparator<FileInformation> comparador = Comparator.comparing(FileInformation::getNom);
+		Comparator<FileInformation> comparador = Comparator.comparing(FileInformation::getNom,
+				String.CASE_INSENSITIVE_ORDER);
 		;
 
 		if ("grandaria".equalsIgnoreCase(ordenacio)) {
