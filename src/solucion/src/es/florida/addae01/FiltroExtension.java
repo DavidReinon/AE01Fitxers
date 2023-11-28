@@ -1,14 +1,16 @@
-package es.florida.addae01;
+package solucion.src.es.florida.addae01;
+
 import java.io.File;
 import java.io.FilenameFilter;
 
-public class FiltroExtension implements FilenameFilter{
-    String extension;
-    FiltroExtension(String extension){
-        this.extension=extension;
-    }
-    
-    public boolean accept(File dir, String name){
-        return name.endsWith(extension);
-    }
+public class FiltroExtension implements FilenameFilter {
+	String extension;
+
+	FiltroExtension(String extension) {
+		this.extension = extension;
+	}
+
+	public boolean accept(File dir, String name) {
+		return name.endsWith(extension);
+	}
 }

@@ -1,4 +1,4 @@
-package es.florida.addae01;
+package solucion.src.es.florida.addae01;
 
 import java.awt.EventQueue;
 
@@ -48,8 +48,8 @@ public class Principal extends JFrame {
 	private static JRadioButton rdbtnAscendente, rdbtnDescendente;
 	private static final ButtonGroup buttonGroup = new ButtonGroup();
 	private static String directorioTrabajo, strCoincidencias, strPopupNombreMensaje, strPopupSobrescrituraMensaje;
-	private static int criterioOrdenacion = 0; //Ordenacion por defecto: nombre
-	private static int orden = 0;  //Ordenacion por defecto: ascendente
+	private static int criterioOrdenacion = 0; // Ordenacion por defecto: nombre
+	private static int orden = 0; // Ordenacion por defecto: ascendente
 	String[] listaFicheros;
 
 	/**
@@ -110,16 +110,17 @@ public class Principal extends JFrame {
 			btnFusionar.setText(btnFusionarStr);
 			txtTextfieldBuscar.setText(txtTextfieldBuscarStr);
 			btnBuscar.setText(btnBuscarStr);
-			
+
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	/**
-	 * Método que devuelve un array de strings con la lista de los ficheros de texto del directorio proporcionado como parámetro
+	 * Método que devuelve un array de strings con la lista de los ficheros de texto
+	 * del directorio proporcionado como parámetro
 	 * 
 	 * @param directorioTrabajo: String con el directorio seleccionado
 	 * @return Devuelve un array de strings
@@ -130,7 +131,7 @@ public class Principal extends JFrame {
 		String[] contenido = directorio.list(filtro);
 		return contenido;
 	}
-	
+
 	/**
 	 * Método que proporciona el tamaño en bytes de los ficheros proporcionados
 	 * 
@@ -145,12 +146,14 @@ public class Principal extends JFrame {
 		}
 		return arrayTamanyos;
 	}
-	
+
 	/**
-	 * Método que proporciona la fecha y hora de última modificación de los ficheros proporcionados
+	 * Método que proporciona la fecha y hora de última modificación de los ficheros
+	 * proporcionados
 	 * 
 	 * @param listaFicheros: array de String con la lista de ficheros
-	 * @return Devuelve un array de long con el tiempo en segundos desde el inicio 1/1/1970 hasta la última fecha de modificación
+	 * @return Devuelve un array de long con el tiempo en segundos desde el inicio
+	 *         1/1/1970 hasta la última fecha de modificación
 	 */
 	public long[] obtenerFechaFicheros(String[] listaFicheros) {
 		long[] arrayFecha = new long[listaFicheros.length];
@@ -160,33 +163,34 @@ public class Principal extends JFrame {
 		}
 		return arrayFecha;
 	}
-	
+
 	/**
 	 * Método para crear la lista ordenada de ficheros
 	 * 
-	 * @return Devuelve el objeto Model para incluirlo en el componente JList correspondiente
+	 * @return Devuelve el objeto Model para incluirlo en el componente JList
+	 *         correspondiente
 	 */
 	public DefaultListModel<String> crearLista() {
 		listaFicheros = listarFicheros(directorioTrabajo);
-		if (criterioOrdenacion == 0) {  //Por nombre
-			if (orden == 0) { //Ascendente
+		if (criterioOrdenacion == 0) { // Por nombre
+			if (orden == 0) { // Ascendente
 				Arrays.sort(listaFicheros, Collator.getInstance());
-			} else { //Descendente
+			} else { // Descendente
 				Arrays.sort(listaFicheros, Collator.getInstance());
 				Collections.reverse(Arrays.asList(listaFicheros));
 			}
 		}
 		long[] tamanyoFicheros = obtenerTamanyoFicheros(listaFicheros);
 		long[] fechaFicheros = obtenerFechaFicheros(listaFicheros);
-		if (criterioOrdenacion == 1) {  //Por tamanyo
+		if (criterioOrdenacion == 1) { // Por tamanyo
 			String[] listaFicherosOld = Arrays.copyOf(listaFicheros, listaFicheros.length);
 			long[] tamanyoFicherosOld = Arrays.copyOf(tamanyoFicheros, tamanyoFicheros.length);
 			long[] fechaFicherosOld = Arrays.copyOf(fechaFicheros, fechaFicheros.length);
 			Arrays.sort(tamanyoFicheros);
-			if (orden == 1) { //Si descendente
+			if (orden == 1) { // Si descendente
 				long[] tamanyoFicherosAux = Arrays.copyOf(tamanyoFicheros, tamanyoFicheros.length);
 				for (int i = 0; i < tamanyoFicheros.length; i++) {
-					tamanyoFicheros[tamanyoFicheros.length-i-1] = tamanyoFicherosAux[i];
+					tamanyoFicheros[tamanyoFicheros.length - i - 1] = tamanyoFicherosAux[i];
 				}
 			}
 			for (int i = 0; i < tamanyoFicheros.length; i++) {
@@ -198,15 +202,15 @@ public class Principal extends JFrame {
 				}
 			}
 		}
-		if (criterioOrdenacion == 2) {  //Por fecha
+		if (criterioOrdenacion == 2) { // Por fecha
 			String[] listaFicherosOld = Arrays.copyOf(listaFicheros, listaFicheros.length);
 			long[] tamanyoFicherosOld = Arrays.copyOf(tamanyoFicheros, tamanyoFicheros.length);
 			long[] fechaFicherosOld = Arrays.copyOf(fechaFicheros, fechaFicheros.length);
 			Arrays.sort(fechaFicheros);
-			if (orden == 1) { //Si descendente
+			if (orden == 1) { // Si descendente
 				long[] fechaFicherosAux = Arrays.copyOf(fechaFicheros, fechaFicheros.length);
 				for (int i = 0; i < fechaFicheros.length; i++) {
-					fechaFicheros[fechaFicheros.length-i-1] = fechaFicherosAux[i];
+					fechaFicheros[fechaFicheros.length - i - 1] = fechaFicherosAux[i];
 				}
 			}
 			for (int i = 0; i < fechaFicheros.length; i++) {
@@ -220,7 +224,8 @@ public class Principal extends JFrame {
 		}
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		for (int i = 0; i < listaFicheros.length; i++) {
-			//String strTamanyo = String.valueOf((int) Math.ceil(tamanyoFicheros[i] / 1024.0)) + " KB";
+			// String strTamanyo = String.valueOf((int) Math.ceil(tamanyoFicheros[i] /
+			// 1024.0)) + " KB";
 			String strTamanyo = String.valueOf(tamanyoFicheros[i]) + " B";
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String strFecha = dateFormat.format(fechaFicheros[i]);
@@ -228,9 +233,10 @@ public class Principal extends JFrame {
 		}
 		return model;
 	}
-	
+
 	/**
-	 * Método que fusiona dos o más archivos de texto en otro fichero indicado por el usuario. Incluye protección por sobrescritura.
+	 * Método que fusiona dos o más archivos de texto en otro fichero indicado por
+	 * el usuario. Incluye protección por sobrescritura.
 	 * 
 	 * @param ficherosSeleccionados
 	 */
@@ -239,7 +245,8 @@ public class Principal extends JFrame {
 		for (int i = 0; i < ficherosSeleccionados.length; i++) {
 			Path path = Path.of(directorioTrabajo + File.separator + listaFicheros[ficherosSeleccionados[i]]);
 			try {
-				String contents = Files.readString(path);  //Lee todo el contenido del fichero en un string (apto para ficheros no muy grandes)
+				String contents = Files.readString(path); // Lee todo el contenido del fichero en un string (apto para
+															// ficheros no muy grandes)
 				todo += contents + "\n";
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
@@ -249,11 +256,11 @@ public class Principal extends JFrame {
 		String nuevoNombre = JOptionPane.showInputDialog(strPopupNombreMensaje);
 		if (Arrays.asList(listaFicheros).contains(nuevoNombre)) {
 			int opcion = JOptionPane.showConfirmDialog(null, strPopupSobrescrituraMensaje);
-			if (opcion != 0) {  //Cancelar sobrescritura
+			if (opcion != 0) { // Cancelar sobrescritura
 				return;
 			}
 		}
-		
+
 		try {
 			File nuevoFichero = new File(directorioTrabajo + File.separator + nuevoNombre);
 			FileWriter fw = new FileWriter(nuevoFichero);
@@ -266,9 +273,9 @@ public class Principal extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Método para buscar las coincidencias del texto proporcionado
 	 * 
@@ -279,8 +286,11 @@ public class Principal extends JFrame {
 		for (int i = 0; i < listaFicheros.length; i++) {
 			Path path = Path.of(directorioTrabajo + File.separator + listaFicheros[i]);
 			try {
-				String contents = Files.readString(path);  //Lee todo el contenido del fichero en un string (apto para ficheros no muy grandes)
-				int coincidencias = contents.split(texto).length - 1; //Utilizar split para ver las coincidencias (ojo si hubiera caracteres especiales, habría que escaparlos primero)
+				String contents = Files.readString(path); // Lee todo el contenido del fichero en un string (apto para
+															// ficheros no muy grandes)
+				int coincidencias = contents.split(texto).length - 1; // Utilizar split para ver las coincidencias (ojo
+																		// si hubiera caracteres especiales, habría que
+																		// escaparlos primero)
 				model.addElement(listaFicheros[i] + "  ->  " + coincidencias + " " + strCoincidencias);
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
@@ -291,7 +301,7 @@ public class Principal extends JFrame {
 	}
 
 	/**
-	 *  Método para crear la interfaz gráfica
+	 * Método para crear la interfaz gráfica
 	 */
 	public Principal() {
 		setTitle("ADD - AE01");
